@@ -1,0 +1,19 @@
+# Ignore Maven or Gradle build output
+target/
+build/
+
+# Ignore IDE and system files
+.idea/
+.vscode/
+*.iml
+
+# Ignore Git and environment files
+.git
+.gitignore
+.env
+.DS_Store
+
+# Ignore logs and temp files
+*.log
+logs/
+tmp/
