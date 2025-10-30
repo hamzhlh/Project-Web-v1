@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:8080/api";
+// const API_URL = "http://localhost:8080/api";
+const API_URL = "https://agile-tranquility-production.up.railway.app/api";
+
 
 export async function login(username, password) {
   const res = await fetch(`${API_URL}/auth/login`, {
