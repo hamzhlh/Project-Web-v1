@@ -1,8 +1,9 @@
 # Stage 1: Build Spring Boot app
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY app-backend/pom.xml ./pom.xml
+COPY app-backend/src ./src
+
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run app with JRE
