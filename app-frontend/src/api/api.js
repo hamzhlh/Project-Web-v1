@@ -1,5 +1,5 @@
-const API_URL = "https://api.hamzah-dev.sbs/api";
-// const API_URL = "https://agile-tranquility-production.up.railway.app/api";
+// const API_URL = "https://api.hamzah-dev.sbs/api";
+const API_URL = "https://agile-tranquility-production.up.railway.app/api";
 
 
 // 🧩 LOGIN — sekarang cookie akan otomatis disimpan oleh browser
