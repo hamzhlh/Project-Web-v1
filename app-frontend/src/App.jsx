@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./components/Register";
 import { isTokenExpired } from "./utils/auth";
+import Profile from "./components/Profile";
 
 export default function App() {
   useEffect(() => {
@@ -26,6 +27,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
