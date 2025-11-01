@@ -275,7 +275,9 @@
     left: -240px;
   }
 
-  
+  .sidebar-footer{
+    padding-bottom: 64px;
+  }
 
   .sidebar.open {
     left: 0;
