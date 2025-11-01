@@ -103,7 +103,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   margin-top: auto;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 16px));
 }
 
 .sidebar-logout {
