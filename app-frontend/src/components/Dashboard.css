@@ -26,6 +26,7 @@
   overflow: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch; 
+  padding-bottom: env(safe-area-inset-bottom); 
 }
 
 .sidebar.closed {
@@ -63,6 +64,7 @@
   padding: 0;
   margin: 1rem 0;
   overflow-y: auto;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .sidebar-menu li {
@@ -101,6 +103,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   margin-top: auto;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
 }
 
 .sidebar-logout {
