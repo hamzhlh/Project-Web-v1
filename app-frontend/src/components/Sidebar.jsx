@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FaHome, FaUser, FaCog, FaSignOutAlt, FaBars } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Dashboard.css";
@@ -6,6 +6,7 @@ import "./Dashboard.css";
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const sidebarRef = useRef(null); // ⬅️ ini penting
 
   const logout = () => {
     localStorage.removeItem("auth_token");
@@ -19,8 +20,21 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     { name: "Settings", icon: <FaCog />, path: "/settings" },
   ];
 
+  // 🔹 Detect klik di luar sidebar
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // jika sidebar terbuka & klik di luar area sidebar → tutup
+      if (isOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, setIsOpen]);
+
   return (
-    <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
+    <div ref={sidebarRef} className={`sidebar ${isOpen ? "open" : "closed"}`}>
       <div className="sidebar-header">
         <FaBars className="menu-toggle" onClick={() => setIsOpen(!isOpen)} />
         {isOpen && <h2 className="sidebar-title">MyApp</h2>}
