@@ -262,6 +262,13 @@
   padding: 1rem 1rem;
   transform: scale(0.8);
 }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 90;
+}
+
 
 /* .sidebar-closed .dashboard-body {
   padding: 2rem 1rem;
