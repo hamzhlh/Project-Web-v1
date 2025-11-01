@@ -259,7 +259,8 @@
 }
 
 .dashboard-body {
-  padding: 2rem 1.5rem;
+  padding: 1rem 1rem;
+  transform: scale(0.8);
 }
 
 /* .sidebar-closed .dashboard-body {
