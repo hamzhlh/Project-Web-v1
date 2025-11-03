@@ -33,7 +33,7 @@ public class User {
 
     // ✅ Tambahan field foto profil
     @Column(name = "profile", columnDefinition = "TEXT")
-    private String profile = "https://i.pravatar.cc/150?img=12"; // default photo
+    private String profile; // default photo
 
     public User(String username, String email, String password) {
         this.username = username;
