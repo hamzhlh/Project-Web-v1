@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { API_URL } from "../api/authApi";
 import { FaBars } from "react-icons/fa";
 import "./Dashboard.css";
