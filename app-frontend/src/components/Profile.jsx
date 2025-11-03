@@ -29,6 +29,9 @@ const Profile = () => {
   const [user, setUser] = useState(storedUser);
   console.log('user : ', user.profile);
 
+  const defaultAvatar = "https://i.pravatar.cc/150?img=12"; // bisa diganti default kamu
+  const profileImage = user.profile ? `${API_URL}${user.profile}` : defaultAvatar;
+
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -107,7 +110,7 @@ const Profile = () => {
             {/* Foto profil */}
             <div className="profile-header">
               <img
-                src={`${API_URL}${user.profile}`}
+                src={profileImage}
                 alt={user.name}
                 className="profile-photo"
               />

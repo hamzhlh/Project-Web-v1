@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { API_URL } from "../api/authApi";
 import { FaBars } from "react-icons/fa";
 import "./Dashboard.css";
@@ -9,6 +10,9 @@ const Header = ({ setIsSidebarOpen }) => {
     email: "hamzah@example.com",
     profile: "https://i.pravatar.cc/150?img=12",
   };
+
+  const defaultAvatar = "https://i.pravatar.cc/150?img=12"; // bisa diganti default kamu
+  const profileImage = user.profile ? `${API_URL}${user.profile}` : defaultAvatar;
 
   return (
     <header className="header">
@@ -26,7 +30,7 @@ const Header = ({ setIsSidebarOpen }) => {
         </div>
 
         <div className="profile-pic">
-          <img src={`${API_URL}${user.profile}`} alt="User Avatar" />
+          <img src={profileImage} alt="User Avatar" />
         </div>
 
         {/* 🔽 Dropdown muncul ketika hover di header-right */}

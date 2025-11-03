@@ -72,10 +72,7 @@ public class AuthController {
         userData.put("name", foundUser.getName());
         userData.put("email", foundUser.getEmail());
         userData.put("phone", foundUser.getPhone());
-        userData.put("profile",
-                (foundUser.getProfile() == null || foundUser.getProfile().isEmpty())
-                        ? "https://i.pravatar.cc/150?img=12"
-                        : foundUser.getProfile()
+        userData.put("profile",foundUser.getProfile() 
         );
 
         return ResponseEntity.ok()
