@@ -1,10 +1,11 @@
-// const API_URL = "https://api.hamzah-dev.sbs/api";
-const API_URL = "https://agile-tranquility-production.up.railway.app/api";
+// export const API_URL = "http://localhost:8080";
+// export const API_URL = "https://api.hamzah-dev.sbs";
+export const API_URL = "https://agile-tranquility-production.up.railway.app";
 
 
 // 🧩 LOGIN — sekarang cookie akan otomatis disimpan oleh browser
 export async function login(username, password) {
-  const res = await fetch(`${API_URL}/auth/login`, {
+  const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include", // ⬅️ penting untuk kirim & terima cookie refreshToken
@@ -25,7 +26,7 @@ export async function login(username, password) {
 // 🧩 REGISTER
 export async function register(username, email, password) {
   try {
-    const res = await fetch(`${API_URL}/auth/register`, {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),
@@ -41,7 +42,7 @@ export async function register(username, email, password) {
 
 // 🧩 REFRESH TOKEN — untuk perbarui access token ketika expired
 export async function refreshAccessToken() {
-  const res = await fetch(`${API_URL}/auth/refresh`, {
+  const res = await fetch(`${API_URL}/api/auth/refresh`, {
     method: "POST",
     credentials: "include", // ⬅️ kirim cookie refreshToken
   });
@@ -58,7 +59,7 @@ export async function refreshAccessToken() {
 
 // 🧩 LOGOUT — hapus data lokal & panggil endpoint logout backend
 export async function logout() {
-  await fetch(`${API_URL}/auth/logout`, {
+  await fetch(`${API_URL}/api/auth/logout`, {
     method: "POST",
     credentials: "include", // kirim cookie biar server hapus refreshToken
   });

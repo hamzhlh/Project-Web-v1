@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../api/api";
+import { register } from "../api/authApi";
 import "./Register.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -20,7 +21,7 @@ export default function Register() {
       return;
     }
 
-    const res = await register(username, email, password);
+    const res = await register(username, name, email, password);
     if (res.ok) {
       alert("Registrasi berhasil!");
       navigate("/login");
@@ -37,6 +38,14 @@ export default function Register() {
           <h2 className="register-title">Science of Technology</h2>
 
           <form onSubmit={handleSubmit} className="register-form">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="register-input"
+              required
+            />
             <div className="register-row">
               <input
                 type="text"

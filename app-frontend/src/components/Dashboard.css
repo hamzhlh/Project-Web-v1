@@ -259,15 +259,195 @@
 }
 
 .dashboard-body {
-  padding: 1rem 1rem;
-  transform: scale(0.8);
+  padding: 0;
+  transform: scale(0.9);
+}
+
+/* ==== Detail profile ==== */
+.profile-container {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  max-width: auto;
+  margin: 24px 24px;
+  text-align: center;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 16px;
+  border: 3px solid #ff826f;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #253858;
+}
+
+.profile-title {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 4px;
+}
+
+.profile-details {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: 600;
+  color: #253858;
+}
+
+.value {
+  color: #253858;
+}
+/* =============================== */
+
+/* Tombol edit profile */
+.edit-profile-btn-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+.btn-edit-profile {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+.btn-edit-profile:hover {
+  background-color: #1e40af;
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Tambahkan padding supaya ada space */
+  overflow-y: auto; /* ✅ Tambahkan scroll jika tinggi modal melebihi viewport */
+  z-index: 999;
+  
+}
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 90vh; /* ✅ Maksimal tinggi modal sesuai viewport */
+  overflow-y: auto; /* ✅ scroll di dalam modal */
+}
+.modal input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+.btn-save {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-cancel {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ====== Cropper Container ====== */
+.crop-size{
+  text-align: center;
+}
+
+.crop-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.crop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.crop-zoom-slider {
+  width: auto;
+  margin-top: 10px;
+}
+
+/* Preview cropped image setelah crop (opsional) */
+.profile-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px auto 0 auto;
+  border: 2px solid #ccc;
+  display: block;
 }
 
 
 
-/* .sidebar-closed .dashboard-body {
-  padding: 2rem 1rem;
-} */
 
 /* ====== Responsif ====== */
 @media (max-width: 768px) {
@@ -278,9 +458,6 @@
     left: -240px;
   }
 
-  /* .sidebar-footer{
-    padding-bottom: 64px;
-  } */
 
   .sidebar.open {
     left: 0;
@@ -312,8 +489,42 @@
     display: none;
   }
 
-  .sidebar-closed .dashboard-body {
-    padding: 1rem 1rem;
-    transform: scale(0.8);
+  .profile-container {
+    width: 90%;
+    margin: 1rem auto;
   }
+  .header {
+    padding: 8px;
+  }
+
+  .modal{
+    transform: scale(0.9);
+  }
+}
+
+
+@media (max-width: 570px) {
+
+  .profile-container {
+    width: 80%;
+    margin: 0.1rem auto;
+  }
+
+}
+@media (max-width: 350px) {
+
+  .profile-container {
+    width: 80%;
+    margin: 0.1rem auto;
+  }
+  .profile-header{
+    transform: scale(0.9);
+  }
+  .profile-details{
+    transform: scale(0.9);
+  }
+  .edit-profile-btn-wrapper{
+    transform: scale(0.9);
+  }
+
 }
