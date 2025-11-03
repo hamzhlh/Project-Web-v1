@@ -1,6 +1,6 @@
 // export const API_URL = "http://localhost:8080";
-// const API_URL = "https://api.hamzah-dev.sbs";
-const API_URL = "https://agile-tranquility-production.up.railway.app";
+// export const API_URL = "https://api.hamzah-dev.sbs";
+export const API_URL = "https://agile-tranquility-production.up.railway.app";
 
 
 // 🧩 LOGIN — sekarang cookie akan otomatis disimpan oleh browser
