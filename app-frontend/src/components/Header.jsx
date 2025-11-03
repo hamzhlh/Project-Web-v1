@@ -1,10 +1,11 @@
 import React from "react";
+import { API_URL } from "../api/authApi";
 import { FaBars } from "react-icons/fa";
 import "./Dashboard.css";
 
 const Header = ({ setIsSidebarOpen }) => {
   const user = JSON.parse(localStorage.getItem("user")) || {
-    username: "Hamzah",
+    name: "Hamzah",
     email: "hamzah@example.com",
     profile: "https://i.pravatar.cc/150?img=12",
   };
@@ -21,16 +22,16 @@ const Header = ({ setIsSidebarOpen }) => {
 
       <div className="header-right">
         <div className="user-info">
-          <span className="user-name">Hi, {user.username}</span>
+          <span className="user-name">Hi, {user.name}</span>
         </div>
 
         <div className="profile-pic">
-          <img src={user.profile} alt="User Avatar" />
+          <img src={`${API_URL}${user.profile}`} alt="User Avatar" />
         </div>
 
         {/* 🔽 Dropdown muncul ketika hover di header-right */}
         <div className="profile-dropdown">
-          <p className="profile-name">{user.username}</p>
+          <p className="profile-name">{user.name}</p>
           <p className="profile-email">{user.email}</p>
         </div>
       </div>

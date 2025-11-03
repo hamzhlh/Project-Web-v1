@@ -9,7 +9,6 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      {isSidebarOpen && <div className="overlay" onClick={() => setIsSidebarOpen(false)}></div>}
       <div className={`main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
         <Header setIsSidebarOpen={setIsSidebarOpen} />
         <div className="dashboard-body">

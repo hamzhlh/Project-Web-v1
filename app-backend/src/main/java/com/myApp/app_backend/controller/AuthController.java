@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 // @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-@CrossOrigin(origins = "https://project-web-v1.vercel.app", allowCredentials = "true")
+// @CrossOrigin(origins = "https://project-web-v1.vercel.app", allowCredentials = "true")
 public class AuthController {
 
     private final UserService userService;
@@ -30,7 +30,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         try {
-            User saved = userService.register(user.getUsername(), user.getEmail(), user.getPassword());
+            User saved = userService.register(user.getUsername(), user.getName(), user.getEmail(), user.getPassword());
 
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Registrasi berhasil!");
@@ -67,8 +67,11 @@ public class AuthController {
                 .build();
 
         Map<String, Object> userData = new HashMap<>();
+        userData.put("id", foundUser.getId());
         userData.put("username", foundUser.getUsername());
+        userData.put("name", foundUser.getName());
         userData.put("email", foundUser.getEmail());
+        userData.put("phone", foundUser.getPhone());
         userData.put("profile",
                 (foundUser.getProfile() == null || foundUser.getProfile().isEmpty())
                         ? "https://i.pravatar.cc/150?img=12"
