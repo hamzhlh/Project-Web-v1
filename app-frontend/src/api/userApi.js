@@ -35,10 +35,9 @@ export async function updateUser(token, userData) {
 
     // Simpan user terbaru ke localStorage kalau update berhasil
     if (res.ok) {
-      if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-      }
-      return { ok: true, data };
+      const updatedUser = data.user || data; // fallback kalau backend langsung return user
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { ok: true, data: updatedUser };
     } else {
       return { ok: false, data };
     }

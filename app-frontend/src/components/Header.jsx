@@ -4,14 +4,27 @@ import { FaBars } from "react-icons/fa";
 import "./Dashboard.css";
 
 const Header = ({ setIsSidebarOpen }) => {
-  const user = JSON.parse(localStorage.getItem("user")) || {
+  let user;
+  try {
+    user = JSON.parse(localStorage.getItem("user"));
+  } catch {
+    user = null;
+  }
+  user ||= {
     name: "Hamzah",
     email: "hamzah@example.com",
-    profile: "https://i.pravatar.cc/150?img=12",
+    profile: "/default-avatar.png",
   };
 
+
   const defaultAvatar = "https://i.pravatar.cc/150?img=12"; // bisa diganti default kamu
-  const profileImage = user.profile ? `${API_URL}${user.profile}` : defaultAvatar;
+  const profileImage =
+  user.profile && user.profile.startsWith("http")
+    ? user.profile
+    : user.profile
+    ? `${API_URL}${user.profile}`
+    : defaultAvatar;
+
 
   return (
     <header className="header">
@@ -29,7 +42,11 @@ const Header = ({ setIsSidebarOpen }) => {
         </div>
 
         <div className="profile-pic">
-          <img src={profileImage} alt="User Avatar" />
+          <img
+            src={profileImage}
+            alt="User Avatar"
+            onError={(e) => (e.target.src = defaultAvatar)}
+          />
         </div>
 
         {/* 🔽 Dropdown muncul ketika hover di header-right */}
