@@ -1,16 +1,15 @@
 package com.myApp.app_backend.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.myApp.app_backend.model.User;
 import com.myApp.app_backend.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -18,10 +17,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private static final String UPLOAD_DIR = "uploads/";
+    private final Cloudinary cloudinary;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, Cloudinary cloudinary) {
         this.userRepository = userRepository;
+        this.cloudinary = cloudinary;
     }
 
     // 🔍 Cari user berdasarkan username
@@ -31,12 +31,9 @@ public class UserService {
 
     // 🧩 REGISTER
     public User register(String username, String name, String email, String password) {
-        // Cek duplikat username
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username sudah dipakai");
         }
-
-        // Cek duplikat email
         if (userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Email sudah dipakai");
         }
@@ -56,8 +53,7 @@ public class UserService {
                 .orElse(false);
     }
 
-    // 🧩 UPDATE PROFILE
-    // ✅ Update user + handle file upload
+    // 🧩 UPDATE PROFILE (pakai Cloudinary)
     public User updateUser(Long id, String name, String email, String phone, MultipartFile profileFile) throws IOException {
         Optional<User> existingUserOpt = userRepository.findById(id);
 
@@ -66,29 +62,24 @@ public class UserService {
         }
 
         User existingUser = existingUserOpt.get();
-
         existingUser.setName(name);
         existingUser.setEmail(email);
         existingUser.setPhone(phone);
 
-        // ✅ Kalau user upload foto baru
+        // ✅ Upload foto baru ke Cloudinary
         if (profileFile != null && !profileFile.isEmpty()) {
-            // 🗑️ Hapus foto lama kalau ada dan bukan default
-            if (existingUser.getProfile() != null && !existingUser.getProfile().contains("default.png")) {
-                String oldFilePath = existingUser.getProfile().replace("/uploads/", "uploads/");
-                File oldFile = new File(oldFilePath);
-                if (oldFile.exists()) {
-                    oldFile.delete();
-                }
-            }
+            // Hapus foto lama di Cloudinary (optional, kalau kamu simpan public_id di database)
+            // ...
 
-            // 💾 Simpan foto baru
-            String newFileName = "user-" + id + "-" + System.currentTimeMillis() + ".png";
-            Path filePath = Paths.get(UPLOAD_DIR + newFileName);
-            Files.copy(profileFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            // Upload ke Cloudinary
+            Map uploadResult = cloudinary.uploader().upload(
+                    profileFile.getBytes(),
+                    ObjectUtils.asMap("folder", "user_profiles")
+            );
 
-            // Simpan URL ke database (untuk diakses frontend)
-            existingUser.setProfile("/uploads/" + newFileName);
+            // Ambil URL aman (https)
+            String imageUrl = (String) uploadResult.get("secure_url");
+            existingUser.setProfile(imageUrl);
         }
 
         return userRepository.save(existingUser);

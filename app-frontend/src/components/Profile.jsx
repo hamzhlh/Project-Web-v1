@@ -30,7 +30,11 @@ const Profile = () => {
   console.log('user : ', user.profile);
 
   const defaultAvatar = "https://i.pravatar.cc/150?img=12"; // bisa diganti default kamu
-  const profileImage = user.profile ? `${API_URL}${user.profile}` : defaultAvatar;
+  const profileImage =
+  user.profile && user.profile.startsWith("http")
+    ? user.profile
+    : `${API_URL}${user.profile || ""}` || defaultAvatar;
+
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -81,7 +85,7 @@ const Profile = () => {
       const res = await updateUser(token, formDataToSend);
 
       if (res.ok) {
-        setUser(JSON.parse(localStorage.getItem("user")));
+        setUser(res.data);
         toast.success("✅ Profil berhasil diperbarui!");
         setShowModal(false);
         setIsUpload(false);
@@ -110,7 +114,7 @@ const Profile = () => {
             {/* Foto profil */}
             <div className="profile-header">
               <img
-                src={profileImage}
+                src={profileImage || defaultAvatar}
                 alt={user.name}
                 className="profile-photo"
               />
