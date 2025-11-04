@@ -55,31 +55,30 @@ public class UserService {
 
     // 🧩 UPDATE PROFILE (pakai Cloudinary)
     public User updateUser(Long id, String name, String email, String phone, MultipartFile profileFile) throws IOException {
-        Optional<User> existingUserOpt = userRepository.findById(id);
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User tidak ditemukan"));
 
-        if (existingUserOpt.isEmpty()) {
-            throw new RuntimeException("User tidak ditemukan");
-        }
-
-        User existingUser = existingUserOpt.get();
         existingUser.setName(name);
         existingUser.setEmail(email);
         existingUser.setPhone(phone);
 
-        // ✅ Upload foto baru ke Cloudinary
+        // ✅ Upload ke Cloudinary hanya jika file ada
         if (profileFile != null && !profileFile.isEmpty()) {
-            // Hapus foto lama di Cloudinary (optional, kalau kamu simpan public_id di database)
-            // ...
+            try {
+                Map uploadResult = cloudinary.uploader().upload(
+                        profileFile.getBytes(),
+                        ObjectUtils.asMap(
+                                "folder", "user_profiles",
+                                "resource_type", "auto" // ⬅️ penting agar Cloudinary handle otomatis
+                        )
+                );
 
-            // Upload ke Cloudinary
-            Map uploadResult = cloudinary.uploader().upload(
-                    profileFile.getBytes(),
-                    ObjectUtils.asMap("folder", "user_profiles")
-            );
-
-            // Ambil URL aman (https)
-            String imageUrl = (String) uploadResult.get("secure_url");
-            existingUser.setProfile(imageUrl);
+                String imageUrl = (String) uploadResult.get("secure_url");
+                existingUser.setProfile(imageUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Gagal upload gambar ke Cloudinary: " + e.getMessage());
+            }
         }
 
         return userRepository.save(existingUser);
