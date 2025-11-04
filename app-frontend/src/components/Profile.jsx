@@ -33,7 +33,9 @@ const Profile = () => {
   const profileImage =
   user.profile && user.profile.startsWith("http")
     ? user.profile
-    : `${API_URL}${user.profile || ""}` || defaultAvatar;
+    : user.profile
+    ? `${API_URL}${user.profile}`
+    : defaultAvatar;
 
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
@@ -114,8 +116,9 @@ const Profile = () => {
             {/* Foto profil */}
             <div className="profile-header">
               <img
-                src={profileImage || defaultAvatar}
+                src={profileImage}
                 alt={user.name}
+                onError={(e) => (e.target.src = defaultAvatar)}
                 className="profile-photo"
               />
               <h2 className="profile-name">{user.name}</h2>
